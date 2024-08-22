@@ -1,4 +1,4 @@
 package org.example.posbackendjavaee.dao;
 
-public class CustomerDAOImpl {
+public class CustomerDataProcessImpl {
 }
