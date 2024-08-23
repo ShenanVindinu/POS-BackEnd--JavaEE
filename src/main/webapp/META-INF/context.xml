@@ -2,5 +2,5 @@
     <Resource name="jdbc/POS-BackEnd" auth="Container" type="javax.sql.DataSource"
               maxTotal="10" maxIdle="8" maxWaitMillis="-1"
               username="root" password="Ijse@123" driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/POS-DB?createDatabaseIfNotExist=true"/>
+              url="jdbc:mysql://localhost:3306/POS_DB?createDatabaseIfNotExist=true"/>
 </Context>
