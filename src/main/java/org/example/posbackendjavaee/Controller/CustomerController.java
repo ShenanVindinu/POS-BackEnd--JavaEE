@@ -1,9 +1,12 @@
 package org.example.posbackendjavaee.Controller;
 
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.posbackendjavaee.model.CustomerDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,8 +37,17 @@ public class CustomerController extends HttpServlet {
         if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
             //send error
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } else {
+            logger.info("POST request received");
         }
 
+//        try (var writer = resp.getWriter()) {
+//            Jsonb jObj = JsonbBuilder.create();
+//            CustomerDTO customerDTO = jObj.fromJson(req.getReader(), CustomerDTO.class);
+//
+//        } catch () {
+//
+//        }
 
     }
 
