@@ -53,10 +53,10 @@ public class CustomerController extends HttpServlet {
 
             var saveData = new CustomerBOImpl();
             if (saveData.saveCustomer(customerDTO, connection)) {
-                writer.write("Student saved successfully");
+                writer.write("Customer saved successfully");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             } else {
-                writer.write("Save student failed");
+                writer.write("Save Customer failed");
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
             }
