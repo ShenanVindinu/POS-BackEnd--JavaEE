@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.posbackendjavaee.model.CustomerDTO;
+import org.example.posbackendjavaee.util.UtilProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,13 +42,15 @@ public class CustomerController extends HttpServlet {
             logger.info("POST request received");
         }
 
-//        try (var writer = resp.getWriter()) {
-//            Jsonb jObj = JsonbBuilder.create();
-//            CustomerDTO customerDTO = jObj.fromJson(req.getReader(), CustomerDTO.class);
-//
-//        } catch () {
-//
-//        }
+        try (var writer = resp.getWriter()) {
+            Jsonb jObj = JsonbBuilder.create();
+            CustomerDTO customerDTO = jObj.fromJson(req.getReader(), CustomerDTO.class);
+
+            customerDTO.setId(UtilProcess.generateId());
+
+
+
+        }
 
     }
 
