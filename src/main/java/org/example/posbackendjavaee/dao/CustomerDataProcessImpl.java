@@ -30,7 +30,7 @@ public final class CustomerDataProcessImpl {
         return customerDTO;
     }
 
-    public boolean saveCustomer(CustomerDTO customerDTO, Connection connection) {
+    public boolean save(CustomerDTO customerDTO, Connection connection) {
         try {
             var ps = connection.prepareStatement(SAVE_STUDENT);
             ps.setString(1, customerDTO.getId());

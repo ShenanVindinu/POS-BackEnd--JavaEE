@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.posbackendjavaee.bo.CustomerBOImpl;
 import org.example.posbackendjavaee.dao.CustomerDataProcessImpl;
 import org.example.posbackendjavaee.model.CustomerDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
@@ -50,7 +51,7 @@ public class CustomerController extends HttpServlet {
 
             customerDTO.setId(UtilProcess.generateId());
 
-            var saveData = new CustomerDataProcessImpl();
+            var saveData = new CustomerBOImpl();
             if (saveData.saveCustomer(customerDTO, connection)) {
                 writer.write("Student saved successfully");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
