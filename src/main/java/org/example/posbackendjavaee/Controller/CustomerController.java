@@ -2,10 +2,12 @@ package org.example.posbackendjavaee.Controller;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.posbackendjavaee.dao.CustomerDataProcessImpl;
 import org.example.posbackendjavaee.model.CustomerDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
 import org.slf4j.Logger;
@@ -38,9 +40,9 @@ public class CustomerController extends HttpServlet {
         if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
             //send error
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        } else {
-            logger.info("POST request received");
         }
+
+        logger.info("POST request received");
 
         try (var writer = resp.getWriter()) {
             Jsonb jObj = JsonbBuilder.create();
@@ -48,9 +50,22 @@ public class CustomerController extends HttpServlet {
 
             customerDTO.setId(UtilProcess.generateId());
 
+            var saveData = new CustomerDataProcessImpl();
+            if (saveData.saveCustomer(customerDTO, connection)) {
+                writer.write("Student saved successfully");
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+            } else {
+                writer.write("Save student failed");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 
+            }
 
+        } catch (JsonbException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            throw new RuntimeException(e);
         }
+
+        logger.info("POST request successfully completed");
 
     }
 
