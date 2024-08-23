@@ -27,7 +27,7 @@ public class CustomerController extends HttpServlet {
     Connection connection;
 
     public void init() {
-        logger.info("Initializing StudentController with call init method");
+        logger.info("Initializing CustomerController with call init method");
         try {
             var ctx = new InitialContext();
             DataSource pool = (DataSource) ctx.lookup("java:comp/env/jdbc/POS-BackEnd");
