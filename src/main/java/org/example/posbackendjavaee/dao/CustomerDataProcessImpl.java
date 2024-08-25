@@ -4,35 +4,35 @@ import org.example.posbackendjavaee.model.CustomerDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class CustomerDataProcessImpl {
 
-    static String SAVE_STUDENT = "INSERT INTO customer (id,name,address,salary) VALUES (?,?,?,?)";
-    static String GET_STUDENT = "SELECT * FROM customer WHERE id=?";
-    static String UPDATE_STUDENT = "UPDATE student SET name=?,city=?,email=?,level=? WHERE id=?";
-    static String DELETE_STUDENT = "DELETE FROM student WHERE id=?";
+    static String SAVE_CUSTOMER = "INSERT INTO customer (id,name,address,salary) VALUES (?,?,?,?)";
+    static String GET_CUSTOMER = "SELECT * FROM customer WHERE id=?";
+    static String GET_ALL_CUSTOMER = "SELECT * FROM customer";
+    static String UPDATE_CUSTOMER = "UPDATE student SET name=?,city=?,email=?,level=? WHERE id=?";
+    static String DELETE_CUSTOMER = "DELETE FROM student WHERE id=?";
 
-    public CustomerDTO getStudentById(String id, Connection connection) throws SQLException {
-        var customerDTO = new CustomerDTO();
-        try {
-            var ps = connection.prepareStatement(GET_STUDENT);
-            ps.setString(1, id);
-            var resultSet = ps.executeQuery();
+    public List<CustomerDTO> getCustomer(Connection connection) throws SQLException {
+        var customers = new ArrayList<CustomerDTO>();
+        try (var ps = connection.prepareStatement(GET_ALL_CUSTOMER); var resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
+                var customerDTO = new CustomerDTO();
                 customerDTO.setId(resultSet.getString("id"));
                 customerDTO.setName(resultSet.getString("name"));
                 customerDTO.setAddress(resultSet.getString("address"));
                 customerDTO.setSalary(resultSet.getString("salary"));
+                customers.add(customerDTO);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return customerDTO;
+        return customers;
     }
 
     public boolean save(CustomerDTO customerDTO, Connection connection) {
         try {
-            var ps = connection.prepareStatement(SAVE_STUDENT);
+            var ps = connection.prepareStatement(SAVE_CUSTOMER);
             ps.setString(1, customerDTO.getId());
             ps.setString(2, customerDTO.getName());
             ps.setString(3, customerDTO.getAddress());

@@ -70,4 +70,17 @@ public class CustomerController extends HttpServlet {
 
     }
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        var dataProcess = new CustomerDataProcessImpl();
+        try (var writer = resp.getWriter()) {
+            var customer = dataProcess.getCustomer(connection);
+            System.out.println(customer);
+            resp.setContentType("application/json");
+            Jsonb jsonb = JsonbBuilder.create();
+            jsonb.toJson(customer, writer);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
