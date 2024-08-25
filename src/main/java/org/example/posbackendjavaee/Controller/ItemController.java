@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.posbackendjavaee.bo.CustomerBOImpl;
 import org.example.posbackendjavaee.bo.ItemBOImpl;
+import org.example.posbackendjavaee.dao.CustomerDataProcessImpl;
+import org.example.posbackendjavaee.dao.ItemDataProcessImpl;
 import org.example.posbackendjavaee.model.CustomerDTO;
 import org.example.posbackendjavaee.model.ItemDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
@@ -41,7 +43,7 @@ public class ItemController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType()==null) {
+        if (req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
 
@@ -68,5 +70,19 @@ public class ItemController extends HttpServlet {
         }
 
         logger.info("POST request successfully completed");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        var dataProcess = new ItemDataProcessImpl();
+        try (var writer = resp.getWriter()) {
+            var item = dataProcess.getItem(connection);
+            System.out.println(item);
+            resp.setContentType("application/json");
+            Jsonb jsonb = JsonbBuilder.create();
+            jsonb.toJson(item, writer);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
