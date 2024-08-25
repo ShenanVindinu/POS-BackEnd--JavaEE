@@ -74,9 +74,9 @@ public class ItemController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        var dataProcess = new ItemDataProcessImpl();
+        var dataProcess = new ItemBOImpl();
         try (var writer = resp.getWriter()) {
-            var item = dataProcess.getItem(connection);
+            var item = dataProcess.getAllItems(connection);
             System.out.println(item);
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
