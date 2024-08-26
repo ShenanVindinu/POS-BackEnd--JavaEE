@@ -3,6 +3,7 @@ package org.example.posbackendjavaee.Controller;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -82,5 +83,28 @@ public class CustomerController extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
+            //send error
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+        var cusName = req.getParameter("name");
+        try (var writer = resp.getWriter()) {
+            var customerDataProcess = new CustomerDataProcessImpl();
+            if (customerDataProcess.deleteCustomer(cusName, connection)) {
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Delete Failed");
+            }
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+
     }
 }

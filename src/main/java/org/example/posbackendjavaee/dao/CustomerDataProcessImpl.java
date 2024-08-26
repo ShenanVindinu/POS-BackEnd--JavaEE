@@ -13,7 +13,7 @@ public final class CustomerDataProcessImpl {
     static String GET_CUSTOMER = "SELECT * FROM customer WHERE id=?";
     static String GET_ALL_CUSTOMER = "SELECT * FROM customer";
     static String UPDATE_CUSTOMER = "UPDATE student SET name=?,city=?,email=?,level=? WHERE id=?";
-    static String DELETE_CUSTOMER = "DELETE FROM student WHERE id=?";
+    static String DELETE_CUSTOMER = "DELETE FROM customer WHERE name=?";
 
     public List<CustomerDTO> getCustomer(Connection connection) throws SQLException {
         var customers = new ArrayList<CustomerDTO>();
@@ -44,5 +44,14 @@ public final class CustomerDataProcessImpl {
     }
 
 
+    public boolean deleteCustomer(String cusName, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(DELETE_CUSTOMER);
+            ps.setString(1, cusName);
+            return ps.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }
 
