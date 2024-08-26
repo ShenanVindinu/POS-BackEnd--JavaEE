@@ -24,7 +24,7 @@ public class CustomerBOImpl {
         return customerDataProcess.getCustomer(connection);
     }
 
-    public boolean updateStudent(CustomerDTO updatedCustomer, Connection connection) {
+    public boolean updateCustomer(CustomerDTO updatedCustomer, Connection connection) {
         return customerDataProcess.update(updatedCustomer, connection);
     }
 }

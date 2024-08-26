@@ -112,8 +112,8 @@ public class CustomerController extends HttpServlet {
         try (var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
             var cusDataProcess = new CustomerBOImpl();
-            var updatedStudent = jsonb.fromJson(req.getReader(), CustomerDTO.class);
-            if (cusDataProcess.updateStudent(updatedStudent, connection)) {
+            var updatedCustomer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
+            if (cusDataProcess.updateCustomer(updatedCustomer, connection)) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {
                 writer.write("Update Failed");
