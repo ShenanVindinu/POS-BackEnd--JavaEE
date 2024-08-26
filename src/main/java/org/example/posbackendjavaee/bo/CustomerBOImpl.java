@@ -14,4 +14,7 @@ public class CustomerBOImpl {
         return customerDataProcess.save(customerDTO, connection);
     }
 
+    public boolean deleteCustomer(String cusName, Connection connection) {
+        return customerDataProcess.deleteCustomer(cusName, connection);
+    }
 }

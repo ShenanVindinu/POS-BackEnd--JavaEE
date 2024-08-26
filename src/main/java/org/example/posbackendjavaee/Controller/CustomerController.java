@@ -94,7 +94,7 @@ public class CustomerController extends HttpServlet {
 
         var cusName = req.getParameter("name");
         try (var writer = resp.getWriter()) {
-            var customerDataProcess = new CustomerDataProcessImpl();
+            var customerDataProcess = new CustomerBOImpl();
             if (customerDataProcess.deleteCustomer(cusName, connection)) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {
