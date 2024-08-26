@@ -14,7 +14,7 @@ public class ItemDataProcessImpl {
     static String GET_ITEM = "SELECT * FROM customer WHERE id=?";
     static String GET_ALL_ITEM = "SELECT * FROM Item";
     static String UPDATE_ITEM = "UPDATE student SET name=?,city=?,email=?,level=? WHERE id=?";
-    static String DELETE_ITEM = "DELETE FROM student WHERE id=?";
+    static String DELETE_ITEM = "DELETE FROM Item WHERE name=?";
 
     public List<ItemDTO> getItem(Connection connection) throws SQLException {
         var items = new ArrayList<ItemDTO>();
@@ -44,4 +44,13 @@ public class ItemDataProcessImpl {
         }
     }
 
+    public boolean deleteItem(String itemName, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(DELETE_ITEM);
+            ps.setString(1, itemName);
+            return ps.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
 }

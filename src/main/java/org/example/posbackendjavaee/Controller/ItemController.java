@@ -85,4 +85,23 @@ public class ItemController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        var itemName = req.getParameter("name");
+        try (var writer = resp.getWriter()) {
+            var itemDataProcess = new ItemDataProcessImpl();
+            if (itemDataProcess.deleteItem(itemName, connection)) {
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                writer.write("Delete Failed");
+            }
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+
+    }
 }
