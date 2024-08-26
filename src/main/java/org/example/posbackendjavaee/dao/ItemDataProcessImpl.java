@@ -13,7 +13,7 @@ public class ItemDataProcessImpl {
     static String SAVE_ITEM = "INSERT INTO Item (id,name,qty,price) VALUES (?,?,?,?)";
     static String GET_ITEM = "SELECT * FROM customer WHERE id=?";
     static String GET_ALL_ITEM = "SELECT * FROM Item";
-    static String UPDATE_ITEM = "UPDATE student SET name=?,city=?,email=?,level=? WHERE id=?";
+    static String UPDATE_ITEM = "UPDATE Item SET name=?,qty=?,price=? WHERE name=?";
     static String DELETE_ITEM = "DELETE FROM Item WHERE name=?";
 
     public List<ItemDTO> getItem(Connection connection) throws SQLException {
@@ -51,6 +51,19 @@ public class ItemDataProcessImpl {
             return ps.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new RuntimeException();
+        }
+    }
+
+    public boolean update(ItemDTO updatedItem, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(UPDATE_ITEM);
+            ps.setString(1, updatedItem.getName());
+            ps.setString(2, updatedItem.getQty());
+            ps.setString(3, updatedItem.getPrice());
+            ps.setString(4, updatedItem.getName());
+            return ps.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

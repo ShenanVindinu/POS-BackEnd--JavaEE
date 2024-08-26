@@ -19,4 +19,7 @@ public class ItemBOImpl {
         return itemDataProcess.getItem(connection);
     }
 
+    public boolean updateItem(ItemDTO updatedItem, Connection connection) {
+        return itemDataProcess.update(updatedItem,connection);
+    }
 }
