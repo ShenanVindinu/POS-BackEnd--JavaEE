@@ -1,5 +1,6 @@
 package org.example.posbackendjavaee.Controller;
 
+import jakarta.json.JsonException;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
@@ -9,7 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.posbackendjavaee.bo.CustomerBOImpl;
-import org.example.posbackendjavaee.dao.CustomerDataProcessImpl;
 import org.example.posbackendjavaee.model.CustomerDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
 import org.slf4j.Logger;
@@ -102,5 +102,26 @@ public class CustomerController extends HttpServlet {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        try (var writer = resp.getWriter()) {
+            Jsonb jsonb = JsonbBuilder.create();
+            var cusDataProcess = new CustomerBOImpl();
+            var updatedStudent = jsonb.fromJson(req.getReader(), CustomerDTO.class);
+            if (cusDataProcess.updateStudent(updatedStudent, connection)) {
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } else {
+                writer.write("Update Failed");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } catch (JsonException e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }
     }
 }

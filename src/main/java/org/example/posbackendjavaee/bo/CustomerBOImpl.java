@@ -23,4 +23,8 @@ public class CustomerBOImpl {
     public List<CustomerDTO> getCustomer(Connection connection) throws SQLException {
         return customerDataProcess.getCustomer(connection);
     }
+
+    public boolean updateStudent(CustomerDTO updatedCustomer, Connection connection) {
+        return customerDataProcess.update(updatedCustomer, connection);
+    }
 }

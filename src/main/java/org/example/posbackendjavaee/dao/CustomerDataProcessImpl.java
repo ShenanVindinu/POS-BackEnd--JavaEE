@@ -12,7 +12,7 @@ public final class CustomerDataProcessImpl {
     static String SAVE_CUSTOMER = "INSERT INTO customer (id,name,address,salary) VALUES (?,?,?,?)";
     static String GET_CUSTOMER = "SELECT * FROM customer WHERE id=?";
     static String GET_ALL_CUSTOMER = "SELECT * FROM customer";
-    static String UPDATE_CUSTOMER = "UPDATE student SET name=?,city=?,email=?,level=? WHERE id=?";
+    static String UPDATE_CUSTOMER = "UPDATE customer SET name=?,address=?,salary=? WHERE name=?";
     static String DELETE_CUSTOMER = "DELETE FROM customer WHERE name=?";
 
     public List<CustomerDTO> getCustomer(Connection connection) throws SQLException {
@@ -51,6 +51,19 @@ public final class CustomerDataProcessImpl {
             return ps.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new RuntimeException();
+        }
+    }
+
+    public boolean update(CustomerDTO updatedCustomer, Connection connection) {
+        try {
+            var ps = connection.prepareStatement(UPDATE_CUSTOMER);
+            ps.setString(1, updatedCustomer.getName());
+            ps.setString(2, updatedCustomer.getAddress());
+            ps.setString(3, updatedCustomer.getSalary());
+            ps.setString(4, updatedCustomer.getName());
+            return ps.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
