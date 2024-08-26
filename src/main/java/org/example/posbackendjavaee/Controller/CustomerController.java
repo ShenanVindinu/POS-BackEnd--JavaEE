@@ -73,7 +73,7 @@ public class CustomerController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        var dataProcess = new CustomerDataProcessImpl();
+        var dataProcess = new CustomerBOImpl();
         try (var writer = resp.getWriter()) {
             var customer = dataProcess.getCustomer(connection);
             System.out.println(customer);
