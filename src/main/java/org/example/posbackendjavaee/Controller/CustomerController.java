@@ -87,10 +87,6 @@ public class CustomerController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!req.getContentType().toLowerCase().startsWith("application/json") || req.getContentType() == null) {
-            //send error
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }
 
         var cusName = req.getParameter("name");
         try (var writer = resp.getWriter()) {
