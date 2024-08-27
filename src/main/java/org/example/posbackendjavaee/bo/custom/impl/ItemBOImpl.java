@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ItemBOImpl implements ItemBO {
 
-    ItemDataDAOImpl itemDataProcess = new ItemDataDAOImpl();
+    ItemDataDAO itemDataProcess = new ItemDataDAOImpl();
 
     @Override
     public boolean saveItem(ItemDTO itemDTO, Connection connection) {
