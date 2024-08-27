@@ -1,5 +1,6 @@
-package org.example.posbackendjavaee.dao;
+package org.example.posbackendjavaee.dao.custom.impl;
 
+import org.example.posbackendjavaee.dao.custom.ItemDAO;
 import org.example.posbackendjavaee.model.ItemDTO;
 
 import java.sql.Connection;
@@ -7,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDataDAOImpl {
+public class ItemDataDAOImpl implements ItemDAO {
 
     static String SAVE_ITEM = "INSERT INTO Item (id,name,qty,price) VALUES (?,?,?,?)";
     static String GET_ITEM = "SELECT * FROM customer WHERE id=?";
@@ -15,6 +16,7 @@ public class ItemDataDAOImpl {
     static String UPDATE_ITEM = "UPDATE Item SET name=?,qty=?,price=? WHERE name=?";
     static String DELETE_ITEM = "DELETE FROM Item WHERE name=?";
 
+    @Override
     public List<ItemDTO> getItem(Connection connection) throws SQLException {
         var items = new ArrayList<ItemDTO>();
         try (var ps = connection.prepareStatement(GET_ALL_ITEM); var resultSet = ps.executeQuery()) {
@@ -30,6 +32,7 @@ public class ItemDataDAOImpl {
         return items;
     }
 
+    @Override
     public boolean save(ItemDTO itemDTO, Connection connection) {
         try {
             var ps = connection.prepareStatement(SAVE_ITEM);
@@ -43,6 +46,7 @@ public class ItemDataDAOImpl {
         }
     }
 
+    @Override
     public boolean deleteItem(String itemName, Connection connection) {
         try {
             var ps = connection.prepareStatement(DELETE_ITEM);
@@ -53,6 +57,7 @@ public class ItemDataDAOImpl {
         }
     }
 
+    @Override
     public boolean update(ItemDTO updatedItem, Connection connection) {
         try {
             var ps = connection.prepareStatement(UPDATE_ITEM);

@@ -1,4 +1,4 @@
-package org.example.posbackendjavaee.dao;
+package org.example.posbackendjavaee.dao.custom;
 
 import org.example.posbackendjavaee.model.CustomerDTO;
 

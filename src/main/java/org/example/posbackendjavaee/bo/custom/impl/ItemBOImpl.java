@@ -1,7 +1,7 @@
 package org.example.posbackendjavaee.bo.custom.impl;
 
 import org.example.posbackendjavaee.bo.custom.ItemBO;
-import org.example.posbackendjavaee.dao.ItemDataDAOImpl;
+import org.example.posbackendjavaee.dao.custom.impl.ItemDataDAOImpl;
 import org.example.posbackendjavaee.model.ItemDTO;
 
 import java.sql.Connection;

@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.posbackendjavaee.bo.custom.ItemBO;
 import org.example.posbackendjavaee.bo.custom.impl.ItemBOImpl;
-import org.example.posbackendjavaee.dao.ItemDataDAOImpl;
 import org.example.posbackendjavaee.model.ItemDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
 import org.slf4j.Logger;

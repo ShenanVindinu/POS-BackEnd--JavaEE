@@ -1,8 +1,8 @@
 package org.example.posbackendjavaee.bo.custom.impl;
 
 import org.example.posbackendjavaee.bo.custom.CustomerBO;
-import org.example.posbackendjavaee.dao.CustomerDAO;
-import org.example.posbackendjavaee.dao.CustomerDAOImpl;
+import org.example.posbackendjavaee.dao.custom.CustomerDAO;
+import org.example.posbackendjavaee.dao.custom.impl.CustomerDAOImpl;
 import org.example.posbackendjavaee.model.CustomerDTO;
 
 import java.sql.Connection;
