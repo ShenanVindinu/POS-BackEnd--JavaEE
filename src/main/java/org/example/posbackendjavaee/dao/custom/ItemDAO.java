@@ -1,12 +1,13 @@
 package org.example.posbackendjavaee.dao.custom;
 
+import org.example.posbackendjavaee.dao.SuperDAO;
 import org.example.posbackendjavaee.model.ItemDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ItemDAO {
+public interface ItemDAO extends SuperDAO {
 
     List<ItemDTO> getItem(Connection connection) throws SQLException;
     boolean save(ItemDTO itemDTO, Connection connection);
