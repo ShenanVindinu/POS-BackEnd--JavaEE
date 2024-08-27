@@ -10,7 +10,10 @@ import java.util.List;
 public interface ItemBO extends SuperBO {
 
     boolean saveItem(ItemDTO itemDTO, Connection connection);
+
     List<ItemDTO> getAllItems(Connection connection) throws SQLException;
+
     boolean updateItem(ItemDTO updatedItem, Connection connection);
+
     boolean deleteItem(String itemName, Connection connection);
 }

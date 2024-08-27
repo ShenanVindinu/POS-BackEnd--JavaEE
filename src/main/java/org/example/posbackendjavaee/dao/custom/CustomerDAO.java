@@ -10,8 +10,11 @@ import java.util.List;
 public interface CustomerDAO extends SuperDAO {
 
     List<CustomerDTO> getCustomer(Connection connection) throws SQLException;
+
     boolean save(CustomerDTO customerDTO, Connection connection);
+
     boolean deleteCustomer(String cusName, Connection connection);
+
     boolean update(CustomerDTO updatedCustomer, Connection connection);
 
 }

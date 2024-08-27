@@ -10,8 +10,11 @@ import java.util.List;
 public interface ItemDAO extends SuperDAO {
 
     List<ItemDTO> getItem(Connection connection) throws SQLException;
+
     boolean save(ItemDTO itemDTO, Connection connection);
+
     boolean deleteItem(String itemName, Connection connection);
+
     boolean update(ItemDTO updatedItem, Connection connection);
 
 }
