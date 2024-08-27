@@ -9,11 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.posbackendjavaee.bo.CustomerBOImpl;
 import org.example.posbackendjavaee.bo.ItemBOImpl;
-import org.example.posbackendjavaee.dao.CustomerDataProcessImpl;
-import org.example.posbackendjavaee.dao.ItemDataProcessImpl;
-import org.example.posbackendjavaee.model.CustomerDTO;
+import org.example.posbackendjavaee.dao.ItemDataDAOImpl;
 import org.example.posbackendjavaee.model.ItemDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
 import org.slf4j.Logger;
@@ -92,7 +89,7 @@ public class ItemController extends HttpServlet {
 
         var itemName = req.getParameter("name");
         try (var writer = resp.getWriter()) {
-            var itemDataProcess = new ItemDataProcessImpl();
+            var itemDataProcess = new ItemDataDAOImpl();
             if (itemDataProcess.deleteItem(itemName, connection)) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {

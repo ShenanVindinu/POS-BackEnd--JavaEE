@@ -1,6 +1,5 @@
 package org.example.posbackendjavaee.dao;
 
-import org.example.posbackendjavaee.model.CustomerDTO;
 import org.example.posbackendjavaee.model.ItemDTO;
 
 import java.sql.Connection;
@@ -8,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDataProcessImpl {
+public class ItemDataDAOImpl {
 
     static String SAVE_ITEM = "INSERT INTO Item (id,name,qty,price) VALUES (?,?,?,?)";
     static String GET_ITEM = "SELECT * FROM customer WHERE id=?";
