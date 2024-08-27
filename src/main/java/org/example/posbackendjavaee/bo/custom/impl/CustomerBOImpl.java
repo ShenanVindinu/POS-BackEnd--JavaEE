@@ -1,6 +1,7 @@
 package org.example.posbackendjavaee.bo.custom.impl;
 
 import org.example.posbackendjavaee.bo.custom.CustomerBO;
+import org.example.posbackendjavaee.dao.DAOFactory;
 import org.example.posbackendjavaee.dao.custom.CustomerDAO;
 import org.example.posbackendjavaee.dao.custom.impl.CustomerDAOImpl;
 import org.example.posbackendjavaee.model.CustomerDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class CustomerBOImpl implements CustomerBO {
 
-    CustomerDAO customerDataProcess = new CustomerDAOImpl();
+    CustomerDAO customerDataProcess = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);
 
     @Override
     public boolean saveCustomer(CustomerDTO customerDTO, Connection connection) {

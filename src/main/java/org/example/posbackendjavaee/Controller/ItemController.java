@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.posbackendjavaee.bo.BOFactory;
 import org.example.posbackendjavaee.bo.custom.ItemBO;
 import org.example.posbackendjavaee.bo.custom.impl.ItemBOImpl;
 import org.example.posbackendjavaee.model.ItemDTO;
@@ -29,7 +30,7 @@ public class ItemController extends HttpServlet {
     static Logger logger = LoggerFactory.getLogger(CustomerController.class);
     Connection connection;
 
-    ItemBO itemDataProcess = new ItemBOImpl();
+    ItemBO itemDataProcess = (ItemBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.ITEM);
 
     public void init() {
         logger.info("Initializing ItemController with call init method");
