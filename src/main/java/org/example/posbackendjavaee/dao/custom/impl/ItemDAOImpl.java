@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDataDAOImpl implements ItemDAO {
+public class ItemDAOImpl implements ItemDAO {
 
     static String SAVE_ITEM = "INSERT INTO Item (id,name,qty,price) VALUES (?,?,?,?)";
     static String GET_ITEM = "SELECT * FROM customer WHERE id=?";
