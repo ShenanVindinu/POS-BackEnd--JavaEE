@@ -9,7 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.posbackendjavaee.bo.ItemBOImpl;
+import org.example.posbackendjavaee.bo.custom.ItemBO;
+import org.example.posbackendjavaee.bo.custom.impl.ItemBOImpl;
 import org.example.posbackendjavaee.dao.ItemDataDAOImpl;
 import org.example.posbackendjavaee.model.ItemDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
@@ -28,6 +29,8 @@ public class ItemController extends HttpServlet {
 
     static Logger logger = LoggerFactory.getLogger(CustomerController.class);
     Connection connection;
+
+    ItemBO itemDataProcess = new ItemBOImpl();
 
     public void init() {
         logger.info("Initializing ItemController with call init method");
@@ -53,8 +56,7 @@ public class ItemController extends HttpServlet {
 
             itemDTO.setId(UtilProcess.generateId());
 
-            var saveData = new ItemBOImpl();
-            if (saveData.saveItem(itemDTO, connection)) {
+            if (itemDataProcess.saveItem(itemDTO, connection)) {
                 writer.write("Item saved successfully");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             } else {
@@ -72,9 +74,8 @@ public class ItemController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        var dataProcess = new ItemBOImpl();
         try (var writer = resp.getWriter()) {
-            var item = dataProcess.getAllItems(connection);
+            var item = itemDataProcess.getAllItems(connection);
             System.out.println(item);
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
@@ -89,7 +90,6 @@ public class ItemController extends HttpServlet {
 
         var itemName = req.getParameter("name");
         try (var writer = resp.getWriter()) {
-            var itemDataProcess = new ItemDataDAOImpl();
             if (itemDataProcess.deleteItem(itemName, connection)) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {
@@ -110,7 +110,6 @@ public class ItemController extends HttpServlet {
         }
         try (var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
-            var itemDataProcess = new ItemBOImpl();
             var updatedItem = jsonb.fromJson(req.getReader(), ItemDTO.class);
             if (itemDataProcess.updateItem(updatedItem, connection)) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
