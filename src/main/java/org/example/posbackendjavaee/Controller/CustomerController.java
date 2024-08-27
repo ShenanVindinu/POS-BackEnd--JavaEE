@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.posbackendjavaee.bo.CustomerBO;
 import org.example.posbackendjavaee.bo.CustomerBOImpl;
 import org.example.posbackendjavaee.model.CustomerDTO;
 import org.example.posbackendjavaee.util.UtilProcess;
@@ -26,6 +27,8 @@ import java.sql.SQLException;
 public class CustomerController extends HttpServlet {
     static Logger logger = LoggerFactory.getLogger(CustomerController.class);
     Connection connection;
+
+    CustomerBO cusDataProcess = new CustomerBOImpl();
 
     public void init() {
         logger.info("Initializing CustomerController with call init method");
@@ -52,8 +55,7 @@ public class CustomerController extends HttpServlet {
 
             customerDTO.setId(UtilProcess.generateId());
 
-            var saveData = new CustomerBOImpl();
-            if (saveData.saveCustomer(customerDTO, connection)) {
+            if (cusDataProcess.saveCustomer(customerDTO, connection)) {
                 writer.write("Customer saved successfully");
                 resp.setStatus(HttpServletResponse.SC_CREATED);
             } else {
@@ -73,9 +75,9 @@ public class CustomerController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        var dataProcess = new CustomerBOImpl();
+
         try (var writer = resp.getWriter()) {
-            var customer = dataProcess.getCustomer(connection);
+            var customer = cusDataProcess.getCustomer(connection);
             System.out.println(customer);
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
@@ -90,8 +92,7 @@ public class CustomerController extends HttpServlet {
 
         var cusName = req.getParameter("name");
         try (var writer = resp.getWriter()) {
-            var customerDataProcess = new CustomerBOImpl();
-            if (customerDataProcess.deleteCustomer(cusName, connection)) {
+            if (cusDataProcess.deleteCustomer(cusName, connection)) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -111,7 +112,6 @@ public class CustomerController extends HttpServlet {
         }
         try (var writer = resp.getWriter()) {
             Jsonb jsonb = JsonbBuilder.create();
-            var cusDataProcess = new CustomerBOImpl();
             var updatedCustomer = jsonb.fromJson(req.getReader(), CustomerDTO.class);
             if (cusDataProcess.updateCustomer(updatedCustomer, connection)) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);

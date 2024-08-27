@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CustomerDataProcessImpl {
+public final class CustomerDAOImpl implements CustomerDAO {
 
     static String SAVE_CUSTOMER = "INSERT INTO customer (id,name,address,salary) VALUES (?,?,?,?)";
     static String GET_CUSTOMER = "SELECT * FROM customer WHERE id=?";
@@ -15,6 +15,7 @@ public final class CustomerDataProcessImpl {
     static String UPDATE_CUSTOMER = "UPDATE customer SET name=?,address=?,salary=? WHERE name=?";
     static String DELETE_CUSTOMER = "DELETE FROM customer WHERE name=?";
 
+    @Override
     public List<CustomerDTO> getCustomer(Connection connection) throws SQLException {
         var customers = new ArrayList<CustomerDTO>();
         try (var ps = connection.prepareStatement(GET_ALL_CUSTOMER); var resultSet = ps.executeQuery()) {
@@ -30,6 +31,7 @@ public final class CustomerDataProcessImpl {
         return customers;
     }
 
+    @Override
     public boolean save(CustomerDTO customerDTO, Connection connection) {
         try {
             var ps = connection.prepareStatement(SAVE_CUSTOMER);
@@ -43,7 +45,7 @@ public final class CustomerDataProcessImpl {
         }
     }
 
-
+    @Override
     public boolean deleteCustomer(String cusName, Connection connection) {
         try {
             var ps = connection.prepareStatement(DELETE_CUSTOMER);
@@ -54,6 +56,7 @@ public final class CustomerDataProcessImpl {
         }
     }
 
+    @Override
     public boolean update(CustomerDTO updatedCustomer, Connection connection) {
         try {
             var ps = connection.prepareStatement(UPDATE_CUSTOMER);
